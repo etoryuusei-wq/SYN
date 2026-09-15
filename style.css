@@ -4,8 +4,8 @@
   --paper-dim: #b9b6ac;
   --line: rgba(233, 230, 221, 0.14);
   --line-strong: rgba(233, 230, 221, 0.28);
-  --font-body: "Zen Kaku Gothic New", sans-serif;
-  --font-data: "IBM Plex Mono", monospace;
+  --font-body: "Shippori Mincho", serif;
+  --font-data: "Courier Prime", monospace;
 }
 
 * { box-sizing: border-box; }
