@@ -15,11 +15,9 @@
     return String(n).padStart(3, "0");
   }
 
-  // 画像未設定のとき用の、決定論的な代替パターン(作品ごとに色味が変わる)
-  function placeholderStyle(i) {
-    const hue = (i * 47) % 360;
-    const hue2 = (hue + 24) % 360;
-    return `background-image: linear-gradient(155deg, hsl(${hue} 12% 22%), hsl(${hue2} 8% 14%));`;
+  // 画像未設定のとき用の、単色の罫線パターン(方眼紙的)
+  function placeholderStyle() {
+    return "background-color: #171b21; background-image: repeating-linear-gradient(45deg, rgba(233,230,221,0.05) 0, rgba(233,230,221,0.05) 1px, transparent 1px, transparent 10px); border: 1px solid var(--line);";
   }
 
   function render() {
@@ -38,8 +36,9 @@
         img.loading = "lazy";
         thumb.appendChild(img);
       } else {
-        thumb.setAttribute("style", placeholderStyle(i));
+        thumb.setAttribute("style", placeholderStyle());
         thumb.classList.add("is-placeholder");
+        thumb.dataset.location = work.location || "";
       }
 
       const meta = document.createElement("div");
@@ -67,7 +66,7 @@
       viewerImage.parentElement.removeAttribute("style");
     } else {
       viewerImage.style.display = "none";
-      viewerImage.parentElement.setAttribute("style", placeholderStyle(i));
+      viewerImage.parentElement.setAttribute("style", placeholderStyle());
     }
     viewerIndex.textContent = pad(i + 1);
     viewerTitle.textContent = work.title;
