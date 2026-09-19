@@ -50,6 +50,17 @@
         <span class="entry-year">${work.captured}</span>
       `;
 
+      const rays = document.createElement("div");
+      rays.className = "entry-rays";
+      rays.setAttribute("aria-hidden", "true");
+      rays.innerHTML = `
+        <span class="ray ray-tl"></span>
+        <span class="ray ray-tr"></span>
+        <span class="ray ray-bl"></span>
+        <span class="ray ray-br"></span>
+      `;
+
+      row.appendChild(rays);
       row.appendChild(thumb);
       row.appendChild(meta);
       row.addEventListener("click", () => openViewer(i));

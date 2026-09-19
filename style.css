@@ -37,15 +37,13 @@ button {
   z-index: 200;
   background: var(--ink);
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding: 0 0 12% 8%;
+  align-items: center;
+  justify-content: center;
   animation: splash-bg-out 0.9s ease-out 2s forwards;
 }
 
 .splash-inner {
-  border-bottom: 1px solid var(--line-strong);
-  padding-bottom: 10px;
+  padding-bottom: 0;
 }
 
 .splash-text {
@@ -87,9 +85,9 @@ button {
 .header-row {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 18px 28px;
+  padding: 24px 28px 3px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 32px;
 }
 
@@ -113,6 +111,7 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   border-top: 1px solid var(--line);
+  overflow: hidden;
 }
 
 .entry {
@@ -131,6 +130,7 @@ main {
 .entry-thumb {
   position: absolute;
   inset: 15%;
+  z-index: 3;
   background-size: cover;
   background-position: center;
 }
@@ -159,14 +159,42 @@ main {
   color: rgba(233, 230, 221, 0.4);
 }
 
+.entry-rays {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease-out;
+}
+
+.entry:hover .entry-rays {
+  opacity: 1;
+}
+
+.ray {
+  position: absolute;
+  height: 1px;
+  width: 300%;
+  transform-origin: 0 0;
+  background: linear-gradient(90deg, var(--line-strong), rgba(241, 237, 226, 0));
+}
+
+/* 内側の正方形(inset 15%)の各角から、外へ斜めに伸ばす */
+.ray-tl { left: 15%; top: 15%; transform: rotate(225deg); }
+.ray-tr { left: 85%; top: 15%; transform: rotate(315deg); }
+.ray-bl { left: 15%; top: 85%; transform: rotate(135deg); }
+.ray-br { left: 85%; top: 85%; transform: rotate(45deg); }
+
 .entry-meta {
   position: absolute;
-  left: 9%;
+  right: 9%;
   bottom: 9%;
-  z-index: 2;
+  z-index: 4;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
+  text-align: right;
   gap: 2px;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85), 0 0 12px rgba(0, 0, 0, 0.6);
 }
