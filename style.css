@@ -1,9 +1,10 @@
 :root {
-  --ink: #12161c;
-  --paper: #e9e6dd;
-  --paper-dim: #b9b6ac;
-  --line: rgba(233, 230, 221, 0.14);
-  --line-strong: rgba(233, 230, 221, 0.28);
+  --ink: #0a0c10;
+  --paper: #f1ede2;
+  --paper-dim: #a8a49a;
+  --line: rgba(241, 237, 226, 0.14);
+  --line-strong: rgba(241, 237, 226, 0.34);
+  --accent: #ff5a2e;
   --font-body: "Shippori Mincho", serif;
   --font-data: "Courier Prime", monospace;
 }
@@ -17,7 +18,7 @@ body {
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 8px;
   line-height: 1.7;
 }
 
@@ -26,6 +27,34 @@ a { color: inherit; }
 button {
   font-family: inherit;
   cursor: pointer;
+}
+
+/* ---------- splash ---------- */
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: splash-out 0.3s ease 2s forwards;
+}
+
+.splash-text {
+  font-family: var(--font-data);
+  letter-spacing: 0.1em;
+  font-size: 22px;
+  color: var(--paper);
+}
+
+@keyframes splash-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 }
 
 /* ---------- header ---------- */
@@ -50,7 +79,7 @@ button {
 
 .mark {
   font-family: var(--font-data);
-  font-size: 14px;
+  font-size: 7px;
   letter-spacing: 0.08em;
   color: var(--paper-dim);
   flex-shrink: 0;
@@ -84,7 +113,7 @@ main {
 
 .entry-thumb {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   background-size: cover;
   background-position: center;
   margin-bottom: 14px;
@@ -110,7 +139,7 @@ main {
   bottom: 8px;
   right: 10px;
   font-family: var(--font-data);
-  font-size: 10px;
+  font-size: 5px;
   letter-spacing: 0.05em;
   color: rgba(233, 230, 221, 0.4);
 }
@@ -125,7 +154,7 @@ main {
 
 .entry-index {
   font-family: var(--font-data);
-  font-size: 12px;
+  font-size: 6px;
   color: var(--paper-dim);
   grid-row: 1;
 }
@@ -133,21 +162,21 @@ main {
 .entry-title {
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 17px;
+  font-size: 8.5px;
   margin: 0;
   grid-column: 1 / -1;
   grid-row: 2;
 }
 
 .entry-location {
-  font-size: 13px;
+  font-size: 6.5px;
   color: var(--paper-dim);
   grid-row: 3;
 }
 
 .entry-year {
   font-family: var(--font-data);
-  font-size: 12px;
+  font-size: 6px;
   color: var(--paper-dim);
   grid-row: 3;
   justify-self: end;
@@ -161,7 +190,7 @@ main {
   padding: 28px;
   border-top: 1px solid var(--line);
   color: var(--paper-dim);
-  font-size: 13px;
+  font-size: 6.5px;
 }
 
 /* ---------- viewer (lightbox) ---------- */
@@ -292,4 +321,5 @@ main {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition: none !important; }
+  .splash { animation: none; display: none; }
 }
