@@ -120,16 +120,27 @@ main {
   background: var(--ink);
   cursor: pointer;
   transition: background 0.15s ease;
-  opacity: 0;
-  animation: entry-in 0.01s steps(1) forwards;
-}
 
-.entry:hover {
-  background: rgba(233, 230, 221, 0.03);
+  /* 最初から消さない */
+  opacity: 1;
+
+  /* 左から右へ展開 */
+  clip-path: inset(0 100% 0 0);
+
+  animation-name: entry-in;
+  animation-duration: 0.45s;
+  animation-timing-function: steps(12);
+  animation-fill-mode: forwards;
 }
 
 @keyframes entry-in {
-  to { opacity: 1; }
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 .entry-thumb {
