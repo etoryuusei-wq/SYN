@@ -119,27 +119,34 @@ main {
   aspect-ratio: 1 / 1;
   background: var(--ink);
   cursor: pointer;
-  transition: background 0.15s ease;
+  overflow: hidden;
 
-  /* 最初から消さない */
   opacity: 1;
 
-  /* 左から右へ展開 */
-  clip-path: inset(0 100% 0 0);
-
-  animation-name: entry-in;
-  animation-duration: 0.45s;
-  animation-timing-function: steps(12);
-  animation-fill-mode: forwards;
+  clip-path: inset(0 0 0 0);
 }
 
-@keyframes entry-in {
-  from {
-    clip-path: inset(0 100% 0 0);
+.entry::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -2px;
+  height: 3px;
+
+  background: var(--paper);
+  z-index: 10;
+
+  animation: scan 0.8s steps(24) forwards;
+}
+
+@keyframes scan {
+  0% {
+    top: 0;
   }
 
-  to {
-    clip-path: inset(0 0 0 0);
+  100% {
+    top: 100%;
   }
 }
 
