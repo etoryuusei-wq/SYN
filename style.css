@@ -39,7 +39,6 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: splash-cut 0.01s steps(1) 2.1s forwards;
 }
 
 .splash-text {
@@ -48,15 +47,7 @@ button {
   font-size: 22px;
   color: var(--paper);
   display: inline-block;
-  animation: splash-jitter 0.3s steps(1) infinite;
-}
-
-@keyframes splash-cut {
-  to {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
+  animation: splash-jitter 2.1s steps(1) 1;
 }
 
 @keyframes splash-jitter {

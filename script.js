@@ -1,5 +1,12 @@
 (function () {
   const ledger = document.getElementById("ledger");
+  const splash = document.getElementById("splash");
+
+  if (splash) {
+    setTimeout(() => {
+      splash.style.display = "none";
+    }, 2100);
+  }
 
   const viewer = document.getElementById("viewer");
   const viewerImage = document.getElementById("viewer-image");
