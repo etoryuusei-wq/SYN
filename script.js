@@ -87,7 +87,7 @@
       row.appendChild(rays);
       row.appendChild(thumb);
       row.appendChild(meta);
-      row.style.animationDelay = `${2.1 + (i / WORKS.length) * 0.9}s`;
+      row.style.animationDelay = `${0.15 + i * 0.08}s`;
       row.addEventListener("click", () => openViewer(i));
       ledger.appendChild(row);
     });
