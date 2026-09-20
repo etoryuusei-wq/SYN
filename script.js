@@ -10,6 +10,23 @@
   const viewerGenerated = document.getElementById("viewer-generated");
   const viewerNote = document.getElementById("viewer-note");
   const viewerClose = document.querySelector(".viewer-close");
+  const hudCoords = document.getElementById("hudCoords");
+
+  function formatCoords(x, y) {
+    return `X:${String(Math.round(x)).padStart(4, "0")} Y:${String(Math.round(y)).padStart(4, "0")}`;
+  }
+
+  document.addEventListener("mousemove", (e) => {
+    hudCoords.textContent = formatCoords(e.clientX, e.clientY);
+  });
+  document.addEventListener("touchstart", (e) => {
+    const t = e.touches[0];
+    if (t) hudCoords.textContent = formatCoords(t.clientX, t.clientY);
+  }, { passive: true });
+  document.addEventListener("touchmove", (e) => {
+    const t = e.touches[0];
+    if (t) hudCoords.textContent = formatCoords(t.clientX, t.clientY);
+  }, { passive: true });
 
   function pad(n) {
     return String(n).padStart(3, "0");
@@ -63,6 +80,7 @@
       row.appendChild(rays);
       row.appendChild(thumb);
       row.appendChild(meta);
+      row.style.animationDelay = `${2.1 + (i / WORKS.length) * 0.9}s`;
       row.addEventListener("click", () => openViewer(i));
       ledger.appendChild(row);
     });
