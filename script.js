@@ -109,6 +109,29 @@
       filler.setAttribute("aria-hidden", "true");
       ledger.appendChild(filler);
     }
+
+    // 罫線を実素材として生成(1本ずつ独立してちらつかせるため)
+    const totalCells = WORKS.length + fillerCount;
+    const rows = totalCells / cols;
+    const gridLines = document.createElement("div");
+    gridLines.className = "grid-lines";
+    gridLines.setAttribute("aria-hidden", "true");
+    const FLICKER_PERIOD = 4;
+    for (let c = 1; c < cols; c++) {
+      const line = document.createElement("span");
+      line.className = "grid-line vertical";
+      line.style.left = `${(100 / cols) * c}%`;
+      line.style.animationDelay = `${(Math.random() * FLICKER_PERIOD).toFixed(2)}s`;
+      gridLines.appendChild(line);
+    }
+    for (let r = 1; r < rows; r++) {
+      const line = document.createElement("span");
+      line.className = "grid-line horizontal";
+      line.style.top = `${(100 / rows) * r}%`;
+      line.style.animationDelay = `${(Math.random() * FLICKER_PERIOD).toFixed(2)}s`;
+      gridLines.appendChild(line);
+    }
+    ledger.appendChild(gridLines);
   }
 
   function openViewer(i) {
