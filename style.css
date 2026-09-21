@@ -18,7 +18,7 @@ body {
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-body);
-  font-size: 8px;
+  font-size: 16px;
   line-height: 1.7;
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='%23f1ede2' stroke-width='1.5'%3E%3Cpath d='M2 10V2h8'/%3E%3Cpath d='M22 2h8v8'/%3E%3Cpath d='M30 22v8h-8'/%3E%3Cpath d='M10 30H2v-8'/%3E%3Ccircle cx='16' cy='16' r='1.4' fill='%23f1ede2'/%3E%3Cpath d='M16 6v4M16 22v4M6 16h4M22 16h4' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E") 16 16, crosshair;
 }
@@ -73,9 +73,9 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 16px 20px;
+  padding: 32px 40px;
   font-family: var(--font-data);
-  font-size: 8px;
+  font-size: 16px;
   letter-spacing: 0.05em;
   color: var(--paper-dim);
   pointer-events: none;
@@ -85,7 +85,7 @@ button {
 .hud-left {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 .hud-coords {
@@ -95,18 +95,17 @@ button {
 /* ---------- ledger / gallery ---------- */
 
 main {
-  max-width: 1180px;
+  max-width: 2360px;
   margin: 0 auto;
-  padding: 64px 28px 96px;
+  padding: 128px 56px 192px;
 }
 
 .ledger {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
+  gap: 2px;
   position: relative;
-  border-top: 1px solid var(--line);
-  zoom: 2;
+  border-top: 2px solid var(--line);
 }
 
 .grid-lines {
@@ -124,13 +123,13 @@ main {
 .grid-line.vertical {
   top: 0;
   bottom: 0;
-  width: 1px;
+  width: 2px;
 }
 
 .grid-line.horizontal {
   left: 0;
   right: 0;
-  height: 1px;
+  height: 2px;
 }
 
 /* 高速道路を真上から見た車のように、ごく短く途切れてすぐ戻る */
@@ -150,8 +149,8 @@ main {
   position: absolute;
   left: 0;
   right: 0;
-  top: -2px;
-  height: 3px;
+  top: -4px;
+  height: 6px;
 
   background: var(--paper);
   z-index: 10;
@@ -193,10 +192,10 @@ main {
 .entry-thumb.is-placeholder::after {
   content: attr(data-location);
   position: absolute;
-  bottom: 8px;
-  right: 10px;
+  bottom: 16px;
+  right: 20px;
   font-family: var(--font-data);
-  font-size: 5px;
+  font-size: 10px;
   letter-spacing: 0.05em;
   color: rgba(233, 230, 221, 0.4);
 }
@@ -210,7 +209,7 @@ main {
 
 .ray {
   position: absolute;
-  height: 1px;
+  height: 2px;
   width: 100%;
   transform-origin: 0 0;
   background: linear-gradient(90deg, var(--line-strong), rgba(241, 237, 226, 0));
@@ -237,43 +236,43 @@ main {
   flex-direction: column;
   align-items: flex-end;
   text-align: right;
-  gap: 2px;
+  gap: 4px;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85), 0 0 12px rgba(0, 0, 0, 0.6);
 }
 
 .entry-index {
   font-family: var(--font-data);
-  font-size: 6px;
+  font-size: 12px;
   color: var(--paper-dim);
 }
 
 .entry-title {
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 8.5px;
+  font-size: 17px;
   margin: 0;
 }
 
 .entry-location {
-  font-size: 6.5px;
+  font-size: 13px;
   color: var(--paper-dim);
 }
 
 .entry-year {
   font-family: var(--font-data);
-  font-size: 6px;
+  font-size: 12px;
   color: var(--paper-dim);
 }
 
 /* ---------- footer ---------- */
 
 .site-footer {
-  max-width: 1180px;
+  max-width: 2360px;
   margin: 0 auto;
-  padding: 28px;
+  padding: 56px;
   border-top: 1px solid var(--line);
   color: var(--paper-dim);
-  font-size: 6.5px;
+  font-size: 13px;
 }
 
 /* ---------- viewer (lightbox) ---------- */
@@ -396,7 +395,7 @@ main {
 @media (max-width: 720px) {
   .viewer-inner { grid-template-columns: 1fr; }
   .viewer-image-wrap { max-height: 45vh; }
-  .hud { padding: 12px 14px; font-size: 7px; }
+  .hud { padding: 24px 28px; font-size: 14px; }
 }
 
 @media (max-width: 640px) {
