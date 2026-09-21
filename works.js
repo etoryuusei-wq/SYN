@@ -13,12 +13,12 @@
 */
 
 const WORKS = [
-  { title: "", location: "NEW YORK, AMERICA", captured: "", generated: "2025.06.02", image: "images/Zara.png", note: "" },
+  { title: "", location: "NEW YORK, AMERICA", captured: "", generated: "2025.06.02", image: "images/Zara.jpg", note: "" },
   { title: "", location: "NEW YORK, AMERICA", captured: "", generated: "2024.08.23", image: "images/TrumpTower.jpg", note: "" },
   { title: "", location: "?", captured: "", generated: "2026.09.15", image: "images/Sink.jpg", note: "" },
   { title: "", location: "?", captured: "", generated: "2026.09.15", image: "images/FreightLiner.jpg", note: "" },
   { title: "", location: "TOKYO, JAPAN", captured: "", generated: "2026.09.15", image: "images/Tokyo.jpg", note: "" },
-  { title: "", location: "SAN SALVADOR, EL SALVADOR", captured: "", generated: "2023.11.01", image: "images/ElSalvador.png", note: "" },
+  { title: "", location: "SAN SALVADOR, EL SALVADOR", captured: "", generated: "2023.11.01", image: "images/ElSalvador.jpg", note: "" },
   { title: "", location: "CDMX, MEXICO", captured: "", generated: "2025.09.18", image: "images/Mexico.jpg", note: "" },
   { title: "", location: "NEW YORK, AMERICA", captured: "", generated: "2026.06.16", image: "images/MoMA.jpg", note: "" },
   { title: "", location: "SALALAH, OMAN", captured: "", generated: "2026.03.23", image: "images/Oman.jpg", note: "" },
