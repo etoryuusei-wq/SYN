@@ -39,6 +39,14 @@
     return String(n).padStart(3, "0");
   }
 
+  const MOBILE_QUERY = "(max-width: 640px)";
+  const COLUMNS_MOBILE = 3;
+  const COLUMNS_DESKTOP = 4;
+
+  function currentColumns() {
+    return window.matchMedia(MOBILE_QUERY).matches ? COLUMNS_MOBILE : COLUMNS_DESKTOP;
+  }
+
   // 画像未設定のとき用の、単色の罫線パターン(方眼紙的)
   function placeholderStyle() {
     return "background-color: #171b21; background-image: repeating-linear-gradient(45deg, rgba(233,230,221,0.05) 0, rgba(233,230,221,0.05) 1px, transparent 1px, transparent 10px); border: 1px solid var(--line);";
@@ -87,10 +95,20 @@
       row.appendChild(rays);
       row.appendChild(thumb);
       row.appendChild(meta);
-      row.style.animationDelay = `${0.15 + i * 0.08}s`;
       row.addEventListener("click", () => openViewer(i));
       ledger.appendChild(row);
     });
+
+    // 最後の行に余りが出る場合、罫線だけの空マスで埋めて枠を完成させる
+    const cols = currentColumns();
+    const remainder = WORKS.length % cols;
+    const fillerCount = remainder === 0 ? 0 : cols - remainder;
+    for (let f = 0; f < fillerCount; f++) {
+      const filler = document.createElement("div");
+      filler.className = "entry";
+      filler.setAttribute("aria-hidden", "true");
+      ledger.appendChild(filler);
+    }
   }
 
   function openViewer(i) {
@@ -129,5 +147,14 @@
     if (e.key === "Escape" && viewer.classList.contains("is-open")) closeViewer();
   });
 
+  let lastColumns = currentColumns();
   render();
+
+  window.addEventListener("resize", () => {
+    const cols = currentColumns();
+    if (cols !== lastColumns) {
+      lastColumns = cols;
+      render();
+    }
+  });
 })();

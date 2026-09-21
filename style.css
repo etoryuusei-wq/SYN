@@ -20,6 +20,7 @@ body {
   font-family: var(--font-body);
   font-size: 8px;
   line-height: 1.7;
+  cursor: crosshair;
 }
 
 a { color: inherit; }
@@ -102,28 +103,17 @@ main {
 
 .ledger {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1px;
   background: var(--line);
   border-top: 1px solid var(--line);
-  animation: scan-reveal 1s steps(24) 2.1s both;
-}
-
-@keyframes scan-reveal {
-  from { clip-path: inset(0 0 100% 0); }
-  to   { clip-path: inset(0 0 0% 0); }
 }
 
 .entry {
   position: relative;
   aspect-ratio: 1 / 1;
   background: var(--ink);
-  cursor: pointer;
   overflow: hidden;
-
-  opacity: 1;
-
-  clip-path: inset(0 0 0 0);
 }
 
 .entry::before {
@@ -186,28 +176,30 @@ main {
   position: absolute;
   inset: 0;
   z-index: 1;
-  opacity: 0;
   pointer-events: none;
-  transition: opacity 0.18s ease-out;
-}
-
-.entry:hover .entry-rays {
-  opacity: 1;
 }
 
 .ray {
   position: absolute;
   height: 1px;
-  width: 300%;
+  width: 47.14%;
   transform-origin: 0 0;
-  background: linear-gradient(90deg, var(--line-strong), rgba(241, 237, 226, 0));
+  background: linear-gradient(90deg, rgba(241, 237, 226, 0), var(--line-strong));
+  transition: transform 0.5s ease-out;
 }
 
-/* 内側の正方形(inset 33.333%)の各角から、外へ斜めに伸ばす */
-.ray-tl { left: 33.333%; top: 33.333%; transform: rotate(225deg); }
-.ray-tr { left: 66.667%; top: 33.333%; transform: rotate(315deg); }
-.ray-bl { left: 33.333%; top: 66.667%; transform: rotate(135deg); }
-.ray-br { left: 66.667%; top: 66.667%; transform: rotate(45deg); }
+/* 外側の角(entryの四隅)から、写真の角(inset 33.333%)へ向けて伸ばす */
+.ray-tl { left: 0;    top: 0;    transform: rotate(45deg)    scaleX(0); }
+.ray-tr { left: 100%; top: 0;    transform: rotate(135deg)   scaleX(0); }
+.ray-bl { left: 0;    top: 100%; transform: rotate(-45deg)   scaleX(0); }
+.ray-br { left: 100%; top: 100%; transform: rotate(-135deg)  scaleX(0); }
+
+@media (hover: hover) and (pointer: fine) {
+  .entry:hover .ray-tl { transform: rotate(45deg)   scaleX(1); }
+  .entry:hover .ray-tr { transform: rotate(135deg)  scaleX(1); }
+  .entry:hover .ray-bl { transform: rotate(-45deg)  scaleX(1); }
+  .entry:hover .ray-br { transform: rotate(-135deg) scaleX(1); }
+}
 
 .entry-meta {
   position: absolute;
@@ -262,7 +254,7 @@ main {
 .viewer {
   position: fixed;
   inset: 0;
-  background: rgba(10, 12, 15, 0.94);
+  background: var(--ink);
   z-index: 100;
   display: flex;
   align-items: center;
@@ -381,7 +373,7 @@ main {
 }
 
 @media (max-width: 640px) {
-  .ledger { grid-template-columns: repeat(2, 1fr); }
+  .ledger { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* ---------- reduced motion ---------- */
@@ -391,6 +383,5 @@ main {
   * { transition: none !important; }
   .splash { animation: none; display: none; }
   .splash-text { animation: none; }
-  .ledger { animation: none; clip-path: none; }
-  .entry { animation: none; opacity: 1; }
+  .entry::before { animation: none; display: none; }
 }
