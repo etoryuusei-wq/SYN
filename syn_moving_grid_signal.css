@@ -1,0 +1,87 @@
+/* SYN — moving grid signal */
+
+.grid-line {
+  animation: none;
+  opacity: 1;
+  will-change: transform, opacity;
+}
+
+.grid-line.horizontal {
+  animation: grid-scan-horizontal 1.15s linear infinite;
+}
+
+.grid-line.vertical {
+  animation: grid-scan-vertical 1.15s linear infinite;
+}
+
+@keyframes grid-scan-horizontal {
+  0% {
+    transform: translateY(-26px);
+    opacity: 1;
+  }
+
+  43% {
+    transform: translateY(26px);
+    opacity: 1;
+  }
+
+  44% {
+    transform: translateY(29px);
+    opacity: 0;
+  }
+
+  45% {
+    transform: translateY(31px);
+    opacity: 0;
+  }
+
+  46% {
+    transform: translateY(34px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(26px);
+    opacity: 1;
+  }
+}
+
+@keyframes grid-scan-vertical {
+  0% {
+    transform: translateX(-26px);
+    opacity: 1;
+  }
+
+  43% {
+    transform: translateX(26px);
+    opacity: 1;
+  }
+
+  44% {
+    transform: translateX(29px);
+    opacity: 0;
+  }
+
+  45% {
+    transform: translateX(31px);
+    opacity: 0;
+  }
+
+  46% {
+    transform: translateX(34px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(26px);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid-line {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}
