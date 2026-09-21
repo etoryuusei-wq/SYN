@@ -4,7 +4,7 @@
 
   if (splash) {
     setTimeout(() => {
-      splash.classList.add("is-hidden");
+      splash.style.display = "none";
     }, 2100);
   }
 
@@ -26,12 +26,10 @@
   document.addEventListener("mousemove", (e) => {
     hudCoords.textContent = formatCoords(e.clientX, e.clientY);
   });
-
   document.addEventListener("touchstart", (e) => {
     const t = e.touches[0];
     if (t) hudCoords.textContent = formatCoords(t.clientX, t.clientY);
   }, { passive: true });
-
   document.addEventListener("touchmove", (e) => {
     const t = e.touches[0];
     if (t) hudCoords.textContent = formatCoords(t.clientX, t.clientY);
@@ -49,22 +47,31 @@
     return window.matchMedia(MOBILE_QUERY).matches ? COLUMNS_MOBILE : COLUMNS_DESKTOP;
   }
 
+  // 画像未設定のとき用の、単色の罫線パターン(方眼紙的)
+  function placeholderStyle() {
+    return "background-color: #171b21; background-image: repeating-linear-gradient(45deg, rgba(233,230,221,0.05) 0, rgba(233,230,221,0.05) 1px, transparent 1px, transparent 10px); border: 1px solid var(--line);";
+  }
+
   function render() {
     ledger.innerHTML = "";
 
     WORKS.forEach((work, i) => {
-      const entry = document.createElement("article");
-      entry.className = "entry";
+      const row = document.createElement("article");
+      row.className = "entry";
 
-      const imageWrap = document.createElement("div");
-      imageWrap.className = "entry-image";
-
-      const img = document.createElement("img");
-      img.src = work.image;
-      img.alt = work.title || work.location || `Work ${pad(i + 1)}`;
-      img.loading = "lazy";
-      img.decoding = "async";
-      imageWrap.appendChild(img);
+      const thumb = document.createElement("div");
+      thumb.className = "entry-thumb";
+      if (work.image) {
+        const img = document.createElement("img");
+        img.src = work.image;
+        img.alt = work.title;
+        img.loading = "lazy";
+        thumb.appendChild(img);
+      } else {
+        thumb.setAttribute("style", placeholderStyle());
+        thumb.classList.add("is-placeholder");
+        thumb.dataset.location = work.location || "";
+      }
 
       const meta = document.createElement("div");
       meta.className = "entry-meta";
@@ -85,18 +92,17 @@
         <span class="ray ray-br"></span>
       `;
 
-      entry.appendChild(rays);
-      entry.appendChild(imageWrap);
-      entry.appendChild(meta);
-
-      entry.addEventListener("click", () => openViewer(i));
-      ledger.appendChild(entry);
+      row.appendChild(rays);
+      row.appendChild(thumb);
+      row.appendChild(meta);
+      row.addEventListener("click", () => openViewer(i));
+      ledger.appendChild(row);
     });
 
+    // 最後の行に余りが出る場合、罫線だけの空マスで埋めて枠を完成させる
     const cols = currentColumns();
     const remainder = WORKS.length % cols;
     const fillerCount = remainder === 0 ? 0 : cols - remainder;
-
     for (let f = 0; f < fillerCount; f++) {
       const filler = document.createElement("div");
       filler.className = "entry";
@@ -104,62 +110,64 @@
       ledger.appendChild(filler);
     }
 
+    // 罫線を実素材として生成(1本ずつ独立してちらつかせるため)
     const totalCells = WORKS.length + fillerCount;
     const rows = totalCells / cols;
-
     const gridLines = document.createElement("div");
     gridLines.className = "grid-lines";
     gridLines.setAttribute("aria-hidden", "true");
-
+    const FLICKER_PERIOD = 4;
     for (let c = 1; c < cols; c++) {
       const line = document.createElement("span");
-      line.className = `grid-line vertical v${c}`;
+      line.className = "grid-line vertical";
+      line.style.left = `${(100 / cols) * c}%`;
+      line.style.animationDelay = `${(Math.random() * FLICKER_PERIOD).toFixed(2)}s`;
       gridLines.appendChild(line);
     }
-
     for (let r = 1; r < rows; r++) {
       const line = document.createElement("span");
-      line.className = `grid-line horizontal h${r}`;
+      line.className = "grid-line horizontal";
+      line.style.top = `${(100 / rows) * r}%`;
+      line.style.animationDelay = `${(Math.random() * FLICKER_PERIOD).toFixed(2)}s`;
       gridLines.appendChild(line);
     }
-
     ledger.appendChild(gridLines);
   }
 
   function openViewer(i) {
     const work = WORKS[i];
-
-    viewerImage.src = work.image;
-    viewerImage.alt = work.title || work.location || `Work ${pad(i + 1)}`;
-
+    if (work.image) {
+      viewerImage.src = work.image;
+      viewerImage.alt = work.title;
+      viewerImage.style.display = "";
+      viewerImage.parentElement.removeAttribute("style");
+    } else {
+      viewerImage.style.display = "none";
+      viewerImage.parentElement.setAttribute("style", placeholderStyle());
+    }
     viewerIndex.textContent = pad(i + 1);
     viewerTitle.textContent = work.title;
     viewerLocation.textContent = work.location;
     viewerCaptured.textContent = work.captured;
     viewerGenerated.textContent = work.generated;
     viewerNote.textContent = work.note || "";
-
     viewer.classList.add("is-open");
     viewer.setAttribute("aria-hidden", "false");
-    document.body.classList.add("viewer-open");
+    document.body.style.overflow = "hidden";
   }
 
   function closeViewer() {
     viewer.classList.remove("is-open");
     viewer.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("viewer-open");
+    document.body.style.overflow = "";
   }
 
   viewerClose.addEventListener("click", closeViewer);
-
   viewer.addEventListener("click", (e) => {
     if (e.target === viewer) closeViewer();
   });
-
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && viewer.classList.contains("is-open")) {
-      closeViewer();
-    }
+    if (e.key === "Escape" && viewer.classList.contains("is-open")) closeViewer();
   });
 
   let lastColumns = currentColumns();
@@ -167,7 +175,6 @@
 
   window.addEventListener("resize", () => {
     const cols = currentColumns();
-
     if (cols !== lastColumns) {
       lastColumns = cols;
       render();
