@@ -12,7 +12,7 @@
   const viewerImage = document.getElementById("viewer-image");
   const viewerIndex = document.getElementById("viewer-index");
   const viewerTitle = document.getElementById("viewer-title");
-   const viewerRoad = document.getElementById("viewer-Road");
+  const viewerRoad = document.getElementById("viewer-road");
   const viewerLocation = document.getElementById("viewer-location");
   const viewerObserved = document.getElementById("viewer-observed");
   const viewerGenerated = document.getElementById("viewer-generated");
