@@ -117,20 +117,31 @@
     gridLines.className = "grid-lines";
     gridLines.setAttribute("aria-hidden", "true");
     const FLICKER_PERIOD = 4;
+
+    const lineDefs = [];
     for (let c = 1; c < cols; c++) {
-      const line = document.createElement("span");
-      line.className = "grid-line vertical";
-      line.style.left = `${(100 / cols) * c}%`;
-      line.style.animationDelay = `${(Math.random() * FLICKER_PERIOD).toFixed(2)}s`;
-      gridLines.appendChild(line);
+      lineDefs.push({ orientation: "vertical", left: `${(100 / cols) * c}%` });
     }
     for (let r = 1; r < rows; r++) {
-      const line = document.createElement("span");
-      line.className = "grid-line horizontal";
-      line.style.top = `${(100 / rows) * r}%`;
-      line.style.animationDelay = `${(Math.random() * FLICKER_PERIOD).toFixed(2)}s`;
-      gridLines.appendChild(line);
+      lineDefs.push({ orientation: "horizontal", top: `${(100 / rows) * r}%` });
     }
+
+    // 縦横が偏らないよう、種類に関係なくシャッフルしてから均等に時間差を配分する
+    for (let i = lineDefs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [lineDefs[i], lineDefs[j]] = [lineDefs[j], lineDefs[i]];
+    }
+
+    const slot = FLICKER_PERIOD / lineDefs.length;
+    lineDefs.forEach((def, i) => {
+      const line = document.createElement("span");
+      line.className = `grid-line ${def.orientation}`;
+      if (def.left) line.style.left = def.left;
+      if (def.top) line.style.top = def.top;
+      const delay = i * slot + Math.random() * slot * 0.6;
+      line.style.animationDelay = `${delay.toFixed(2)}s`;
+      gridLines.appendChild(line);
+    });
     ledger.appendChild(gridLines);
   }
 
