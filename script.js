@@ -80,7 +80,7 @@
         <span class="entry-index">${pad(i + 1)}</span>
         <h2 class="entry-title">${work.title}</h2>
         <span class="entry-location">${work.location}</span>
-        <span class="entry-year">${work.captured}</span>
+        <span class="entry-year">${work.observed || ""}</span>
       `;
 
       const rays = document.createElement("div");
@@ -117,7 +117,7 @@
     const gridLines = document.createElement("div");
     gridLines.className = "grid-lines";
     gridLines.setAttribute("aria-hidden", "true");
-    const FLICKER_PERIOD = 4;
+    const FLICKER_PERIOD = 2.4; // style.cssの line-slide-h / line-slide-v の周期と合わせる
 
     const lineDefs = [];
     for (let c = 1; c < cols; c++) {
@@ -159,8 +159,9 @@
     }
     viewerIndex.textContent = pad(i + 1);
     viewerTitle.textContent = work.title;
+    viewerRoad.textContent = work.road || "";
     viewerLocation.textContent = work.location;
-    viewerCaptured.textContent = work.captured;
+    viewerObserved.textContent = work.observed || "";
     viewerGenerated.textContent = work.generated;
     viewerNote.textContent = work.note || "";
     viewer.classList.add("is-open");
