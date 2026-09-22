@@ -21,7 +21,7 @@
   const hudCoords = document.getElementById("hudCoords");
 
   function formatCoords(x, y) {
-    return `X:${String(Math.round(x)).padStart(4, "0")} Y:${String(Math.round(y)).padStart(4, "0")}`;
+    return `${String(Math.round(x)).padStart(4, "0")} ${String(Math.round(y)).padStart(4, "0")}`;
   }
 
   document.addEventListener("mousemove", (e) => {
