@@ -155,44 +155,6 @@ main {
   background: var(--ink);
 }
 
-.entry::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -4px;
-  height: 6px;
-
-  background: linear-gradient(90deg, transparent, var(--paper) 35%, var(--paper) 65%, transparent);
-  filter: blur(0.6px);
-  box-shadow: 0 0 10px 1px rgba(241, 237, 226, 0.35);
-  z-index: 10;
-
-  animation: scan 7s steps(24) 2.1s infinite;
-}
-
-@keyframes scan {
-  0% {
-    top: 0;
-    opacity: 1;
-  }
-
-  11.4% {
-    top: 100%;
-    opacity: 1;
-  }
-
-  11.5% {
-    top: 100%;
-    opacity: 0;
-  }
-
-  100% {
-    top: 100%;
-    opacity: 0;
-  }
-}
-
 .entry-thumb {
   position: absolute;
   inset: 33.333%;
