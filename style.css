@@ -117,25 +117,35 @@ main {
 .grid-line {
   position: absolute;
   background: var(--line);
-  animation: line-flicker 4s steps(1) infinite;
 }
 
 .grid-line.vertical {
   top: 0;
   bottom: 0;
   width: 2px;
+  transform-origin: 50% 100%;
+  animation: line-wipe-v 4s linear infinite;
 }
 
 .grid-line.horizontal {
   left: 0;
   right: 0;
   height: 2px;
+  transform-origin: 0% 50%;
+  animation: line-wipe-h 4s linear infinite;
 }
 
-/* 高速道路を真上から見た車のように、ごく短く途切れてすぐ戻る */
-@keyframes line-flicker {
-  0%, 91%, 96%, 100% { opacity: 1; }
-  92%, 95% { opacity: 0; }
+/* 高速道路を真上から見た車のように、線の端からサッと縮んで消え、サッと伸びて戻る */
+@keyframes line-wipe-h {
+  0%, 90%   { transform: scaleX(1); }
+  92%, 94%  { transform: scaleX(0); }
+  96%, 100% { transform: scaleX(1); }
+}
+
+@keyframes line-wipe-v {
+  0%, 90%   { transform: scaleY(1); }
+  92%, 94%  { transform: scaleY(0); }
+  96%, 100% { transform: scaleY(1); }
 }
 
 .entry {
@@ -155,7 +165,7 @@ main {
   background: var(--paper);
   z-index: 10;
 
-  animation: scan 0.8s steps(24) forwards;
+  animation: scan 0.8s steps(24) 2.1s forwards;
 }
 
 @keyframes scan {
@@ -164,8 +174,7 @@ main {
     opacity: 1;
   }
 
-  90% {
-    top: 100%;
+  99% {
     opacity: 1;
   }
 
@@ -417,5 +426,5 @@ main {
   .splash { animation: none; display: none; }
   .splash-text { animation: none; }
   .entry::before { animation: none; display: none; }
-  .grid-line { animation: none; opacity: 1; }
+  .grid-line { animation: none; transform: none; }
 }
