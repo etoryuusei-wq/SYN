@@ -20,6 +20,12 @@
   const viewerClose = document.querySelector(".viewer-close");
   const hudCoords = document.getElementById("hudCoords");
 
+  const touchCrosshair = document.createElement("div");
+  touchCrosshair.className = "touch-crosshair";
+  touchCrosshair.setAttribute("aria-hidden", "true");
+  document.body.appendChild(touchCrosshair);
+
+
   function formatCoords(x, y) {
     return `${String(Math.round(x)).padStart(4, "0")} ${String(Math.round(y)).padStart(4, "0")}`;
   }
@@ -29,11 +35,18 @@
   });
   document.addEventListener("touchstart", (e) => {
     const t = e.touches[0];
-    if (t) hudCoords.textContent = formatCoords(t.clientX, t.clientY);
+    if (!t) return;
+    hudCoords.textContent = formatCoords(t.clientX, t.clientY);
+    touchCrosshair.style.left = `${t.clientX}px`;
+    touchCrosshair.style.top = `${t.clientY}px`;
   }, { passive: true });
-  document.addEventListener("touchmove", (e) => {
-    const t = e.touches[0];
-    if (t) hudCoords.textContent = formatCoords(t.clientX, t.clientY);
+
+  document.addEventListener("touchend", (e) => {
+    const t = e.changedTouches[0];
+    if (!t) return;
+    hudCoords.textContent = formatCoords(t.clientX, t.clientY);
+    touchCrosshair.style.left = `${t.clientX}px`;
+    touchCrosshair.style.top = `${t.clientY}px`;
   }, { passive: true });
 
   function pad(n) {
@@ -117,7 +130,7 @@
     const gridLines = document.createElement("div");
     gridLines.className = "grid-lines";
     gridLines.setAttribute("aria-hidden", "true");
-    const FLICKER_PERIOD = 2.4; // style.cssの line-slide-h / line-slide-v の周期と合わせる
+    const FLICKER_PERIOD = 1.2; // style.cssの走査周期と合わせる
 
     const lineDefs = [];
     for (let c = 1; c < cols; c++) {
