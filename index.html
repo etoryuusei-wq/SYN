@@ -12,8 +12,8 @@
 </head>
 <body>
 
-<div id="splash" class="splash">
-  <div class="splash-inner"><span class="splash-text">OBSERVATIONS</span></div>
+<div id="splash" class="splash" aria-hidden="true">
+  <span class="splash-text">OBSERVATIONS</span>
 </div>
 
 <main>
@@ -22,15 +22,17 @@
       <span>LOG</span>
       <span>RYUSEI ETO</span>
     </div>
-    <div class="page-header-coords" id="hudCoords">0000 0000</div>
+    <span class="page-coords" id="pageCoords">0000 0000</span>
   </header>
 
   <div id="ledger" class="ledger"></div>
 </main>
 
 <footer class="site-footer">
-  <p><a href="https://instagram.com/eto_cg" target="_blank" rel="noopener">@eto_cg</a></p>
+  <a href="https://www.instagram.com/sightseeingcomputer/" target="_blank" rel="noopener">@sightseeingcomputer</a>
 </footer>
+
+<div id="tapCrosshair" class="tap-crosshair" aria-hidden="true"></div>
 
 <div id="viewer" class="viewer" aria-hidden="true">
   <button class="viewer-close" aria-label="閉じる">×</button>
