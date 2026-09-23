@@ -115,43 +115,45 @@ main {
 
 .grid-line {
   position: absolute;
+  background: var(--line);
 }
 
 .grid-line.vertical {
   top: 0;
   bottom: 0;
   width: 2px;
-  background:
-    linear-gradient(180deg, transparent, var(--paper) 50%, transparent) 0 0 / 100% 300%,
-    var(--line);
-  animation: line-slide-v 2.4s linear infinite;
+  transform-origin: 50% 100%;
+  animation: line-wipe-v 4s linear infinite;
 }
 
 .grid-line.horizontal {
   left: 0;
   right: 0;
   height: 2px;
-  background:
-    linear-gradient(90deg, transparent, var(--paper) 50%, transparent) 0 0 / 300% 100%,
-    var(--line);
-  animation: line-slide-h 2.4s linear infinite;
+  transform-origin: 0% 50%;
+  animation: line-wipe-h 4s linear infinite;
 }
 
-/* 高速道路を真上から見た車のように、光の帯が端から端へ流れ続ける */
-@keyframes line-slide-v {
-  from { background-position: 0 200%, 0 0; }
-  to   { background-position: 0 -200%, 0 0; }
+/* 普段は静止、周期の中で一度だけ0.4秒かけて途切れ、また0.4秒かけて戻る */
+@keyframes line-wipe-h {
+  0%, 70%   { transform: scaleX(1); }
+  80%       { transform: scaleX(0); }
+  83%       { transform: scaleX(0); }
+  93%, 100% { transform: scaleX(1); }
 }
 
-@keyframes line-slide-h {
-  from { background-position: 200% 0, 0 0; }
-  to   { background-position: -200% 0, 0 0; }
+@keyframes line-wipe-v {
+  0%, 70%   { transform: scaleY(1); }
+  80%       { transform: scaleY(0); }
+  83%       { transform: scaleY(0); }
+  93%, 100% { transform: scaleY(1); }
 }
 
 .entry {
   position: relative;
   aspect-ratio: 1 / 1;
   background: var(--ink);
+  container-type: inline-size;
 }
 
 .entry-thumb {
@@ -181,7 +183,7 @@ main {
   bottom: 16px;
   right: 20px;
   font-family: var(--font-data);
-  font-size: 10px;
+  font-size: 1.8cqw;
   letter-spacing: 0.05em;
   color: rgba(233, 230, 221, 0.4);
 }
@@ -228,25 +230,25 @@ main {
 
 .entry-index {
   font-family: var(--font-data);
-  font-size: 24px;
+  font-size: 4.3cqw;
   color: var(--paper-dim);
 }
 
 .entry-title {
   font-family: var(--font-body);
   font-weight: 500;
-  font-size: 34px;
+  font-size: 6.1cqw;
   margin: 0;
 }
 
 .entry-location {
-  font-size: 26px;
+  font-size: 4.6cqw;
   color: var(--paper-dim);
 }
 
 .entry-year {
   font-family: var(--font-data);
-  font-size: 24px;
+  font-size: 4.3cqw;
   color: var(--paper-dim);
 }
 
@@ -395,5 +397,5 @@ main {
   .splash { animation: none; display: none; }
   .splash-text { animation: none; }
   .entry::before { animation: none; display: none; }
-  .grid-line { animation: none; background-position: 0 0, 0 0; }
+  .grid-line { animation: none; transform: none; }
 }
