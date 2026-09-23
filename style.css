@@ -155,17 +155,16 @@ main {
   transform-origin: 0 0;
   background: linear-gradient(90deg, var(--line-strong), rgba(241, 237, 226, 0));
   clip-path: inset(0 0 0 100%);
-  transition: clip-path 0.25s ease-out;
+}
+
+@media (hover:hover) and (pointer:fine) {
+  .entry:hover .ray { clip-path: inset(0); }
 }
 
 .ray-tl { left: 33.333%; top: 33.333%; transform: rotate(225deg); }
 .ray-tr { left: 66.667%; top: 33.333%; transform: rotate(315deg); }
 .ray-bl { left: 33.333%; top: 66.667%; transform: rotate(135deg); }
 .ray-br { left: 66.667%; top: 66.667%; transform: rotate(45deg); }
-
-@media (hover: hover) and (pointer: fine) {
-  .entry:hover .ray { clip-path: inset(0); }
-}
 
 .entry-meta {
   position: absolute;
@@ -271,6 +270,8 @@ main {
 
 .viewer-image-wrap img {
   display: block;
+  width: auto;
+  height: auto;
   max-width: 100%;
   max-height: 78vh;
   object-fit: contain;
