@@ -1,6 +1,7 @@
 const ledger = document.getElementById("ledger");
 const splash = document.getElementById("splash");
 const pageCoords = document.getElementById("pageCoords");
+const pageClock = document.getElementById("pageClock");
 const tapCrosshair = document.getElementById("tapCrosshair");
 
 const viewer = document.getElementById("viewer");
@@ -41,6 +42,21 @@ document.addEventListener("touchstart", (event) => {
   const touch = event.touches[0];
   if (touch) updatePointer(touch.pageX, touch.pageY, true);
 }, { passive: true });
+
+function pad2(number) {
+  return String(number).padStart(2, "0");
+}
+
+function updateClock() {
+  const now = new Date();
+  pageClock.textContent =
+    `${now.getFullYear()}${pad2(now.getMonth() + 1)}${pad2(now.getDate())}` +
+    `${pad2(now.getHours())}${pad2(now.getMinutes())}${pad2(now.getSeconds())}` +
+    `${pad2(Math.floor(now.getMilliseconds() / 10))}`;
+}
+
+updateClock();
+setInterval(updateClock, 10);
 
 setTimeout(() => {
   splash.style.display = "none";
@@ -101,11 +117,14 @@ function render() {
     image.loading = "lazy";
     thumb.appendChild(image);
 
+    const title = document.createElement("h2");
+    title.className = "entry-title";
+    title.textContent = work.title;
+
     const meta = document.createElement("div");
     meta.className = "entry-meta";
     meta.innerHTML = `
       <span class="entry-index">${pad(index + 1)}</span>
-      <h2 class="entry-title">${work.title}</h2>
       <span class="entry-location">${work.location}</span>
       <span class="entry-year">${work.observed || ""}</span>
     `;
@@ -120,7 +139,7 @@ function render() {
       <span class="ray ray-br"></span>
     `;
 
-    entry.append(rays, thumb, meta);
+    entry.append(rays, thumb, title, meta);
     ledger.appendChild(entry);
   });
 
