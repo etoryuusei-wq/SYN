@@ -103,8 +103,6 @@ main {
   bottom: 0;
   width: 2px;
   background: repeating-linear-gradient(180deg, var(--paper) 0 4px, transparent 4px 8px);
-  background-position: 0 0;
-  animation: pass-v 4s linear infinite;
 }
 
 .grid-line.horizontal {
@@ -112,21 +110,43 @@ main {
   right: 0;
   height: 2px;
   background: repeating-linear-gradient(90deg, var(--paper) 0 4px, transparent 4px 8px);
-  background-position: 0 0;
+}
+
+.grid-line::after {
+  content: "";
+  position: absolute;
+  background: var(--paper);
+}
+
+.grid-line.vertical::after {
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 24px;
+  transform: translateY(-24px);
+  animation: pass-v 4s linear infinite;
+}
+
+.grid-line.horizontal::after {
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 2px;
+  transform: translateX(-24px);
   animation: pass-h 4s linear infinite;
 }
 
-/* 普段は静止、周期の中で一度だけドットが1コマ分だけ流れて(見た目は繰り返し柄なので継ぎ目なし)、戻ることはない */
+/* 普段は静止した点線のまま、周期の中で一度だけ粒が端から端へ通過する。往復はしない(両端とも画面外で切り替わるので継ぎ目が見えない) */
 @keyframes pass-h {
-  0%, 70%  { background-position: 0 0; }
-  92%      { background-position: -8px 0; }
-  100%     { background-position: -8px 0; }
+  0%, 70%  { transform: translateX(-24px); }
+  92%      { transform: translateX(calc(100% + 24px)); }
+  100%     { transform: translateX(calc(100% + 24px)); }
 }
 
 @keyframes pass-v {
-  0%, 70%  { background-position: 0 0; }
-  92%      { background-position: 0 -8px; }
-  100%     { background-position: 0 -8px; }
+  0%, 70%  { transform: translateY(-24px); }
+  92%      { transform: translateY(calc(100% + 24px)); }
+  100%     { transform: translateY(calc(100% + 24px)); }
 }
 
 .entry {
@@ -165,6 +185,7 @@ main {
   transform-origin: 0 0;
   background: linear-gradient(90deg, var(--line-strong), rgba(241, 237, 226, 0));
   clip-path: inset(0 0 0 100%);
+  transition: clip-path 0.25s ease-out;
 }
 
 @media (hover:hover) and (pointer:fine) {
@@ -339,5 +360,5 @@ main {
   * { transition: none !important; }
   .splash { animation: none; display: none; }
   .splash-text { animation: none; }
-  .grid-line { animation: none; background-position: 0 0; }
+  .grid-line::after { animation: none; transform: translateX(-9999px); }
 }
